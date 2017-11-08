@@ -12,4 +12,3 @@ SET(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 SET(CMAKE_BUILD_TYPE Release)
 
 add_executable (OWL owl.c mem.c seq.c time.c pos.c msg.c parser.c common.c buffer.c hash.c rmodel.c defs.h param.h) 
-TARGET_LINK_LIBRARIES(OWL pthread)
