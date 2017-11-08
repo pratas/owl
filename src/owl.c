@@ -19,12 +19,13 @@
 #include "common.h"
 #include "rmodel.h"
 
-HASH     *Hash; // HASH MEMORY SHARED BY THREADING
+HASH     *Hash; // HASH MEMORY IS PUBLIC
 
-/*
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - C O M P R E S S I N G - - - - - - - - - - - - - 
-void MapTarget(Threads T){
+void MapTarget(void){
+
+/*
   FILE      *Reader = Fopen(P->Con.name, "r");
   char      name[MAX_FILENAME];
   sprintf(name, ".map%u", T.id+1);
@@ -108,15 +109,7 @@ void MapTarget(Threads T){
   RemoveRClass(Mod);
   fclose(Writter);
   fclose(Reader);
-  }
 */
-
-//////////////////////////////////////////////////////////////////////////////
-// - - - - - - - - - - - - - M A P   T H R E A D I N G - - - - - - - - - - - -
-void *MapThread(void *Thr){
-  Threads *T = (Threads *) Thr;
-  //MapTarget(T[0]);
-  pthread_exit(NULL);
   }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -178,47 +171,9 @@ void MapAction(){
   fprintf(stderr, "      Done!                \n");
 
   fprintf(stderr, "  [+] Map contigs ... \n");
-  fprintf(stderr, "      (this may take a while) ");
-/*
-  for(n = 0 ; n < P->nThreads ; ++n)
-    pthread_create(&(t[n+1]), NULL, MapThread, (void *) &(T[n]));
-  for(n = 0 ; n < P->nThreads ; ++n) // DO NOT JOIN FORS!
-    pthread_join(t[n+1], NULL);
-*/
+  MapTarget();
   fprintf(stderr, "\r      Done!                   \n");
   }
-
-/*
-//////////////////////////////////////////////////////////////////////////////
-// - - - - - - - - - - - - - - - - J O I N E R - - - - - - - - - - - - - - - -
-//
-// JOINNING THREADS FUNCTION
-// IT ALSO ADDS IN THE FIRST LINE A WATERMARK AND THE NUMBER OF BASES FROM REF 
-// AND CONTIGS FILES
-// 
-void ThreadConcatenation(void){
-  FILE *OUT = NULL;
-  uint32_t n, k;
-  uint8_t *buf = (uint8_t *) Malloc(BUFFER_SIZE * sizeof(uint8_t));
-
-  fprintf(stderr, "  [+] Joinning thread files ...\n");
-  // HEADER WITH SIZES TO DRAW CHROMOSOMES IN SMASH-VISUAL
-  OUT = Fopen(P->positions, "w");
-  fprintf(OUT, "#SCF\t%"PRIi64"\t%"PRIi64"\n", P->Con.nBases, P->Ref.nBases);
-  // CONCATENATION CHAR BY CHAR -> TODO: USE BLOCK
-  for(n = 0 ; n < P->nThreads ; ++n){
-    char tmp[MAX_FILENAME];
-    sprintf(tmp, "%s.map%u", P->positions, n+1);
-    FILE *IN = Fopen(tmp, "r");
-    while((k = fread(buf, 1, BUFFER_SIZE, IN)))
-      fwrite(buf, 1, k, OUT);
-    fclose(IN);
-    unlink(tmp);
-    }
-  fclose(OUT);
-  fprintf(stderr, "      Done!                \n");
-  }
-*/
 
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -256,7 +211,6 @@ int32_t main(int argc, char *argv[]){
   fprintf(stderr, "==[ PROCESSING ]====================\n");
   TIME *Time = CreateClock(clock());
   MapAction();
-  //ThreadConcatenation();
   StopTimeNDRM(Time, clock());
   fprintf(stderr, "\n");
 

@@ -25,7 +25,7 @@ ENTRY;
 
 typedef struct{
   uint16_t *size;    // NUMBER OF KEYS FOR EACH ENTRY
-  ENTRY    **ent;    // ENTRIES VECTORS POINTERS
+  ENTRY    **ent;     // ENTRIES CONTAINNING { KEY(16 bits), POS(32 bits) }
   }
 HASH;
 
