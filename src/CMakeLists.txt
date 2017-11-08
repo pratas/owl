@@ -11,4 +11,4 @@ SET(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 SET(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 SET(CMAKE_BUILD_TYPE Release)
 
-add_executable (OWL owl.c mem.c seq.c time.c pos.c msg.c parser.c common.c buffer.c hash.c rmodel.c defs.h param.h) 
+add_executable (OWL owl.c mem.c seq.c time.c pos.c msg.c parser.c common.c buffer.c hash.c reads.c rmodel.c defs.h param.h) 

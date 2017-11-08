@@ -15,6 +15,7 @@
 #include "param.h"
 #include "msg.h"
 #include "parser.h"
+#include "reads.h"
 #include "buffer.h"
 #include "common.h"
 #include "rmodel.h"
@@ -24,92 +25,45 @@ HASH     *Hash; // HASH MEMORY IS PUBLIC
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - C O M P R E S S I N G - - - - - - - - - - - - - 
 void MapTarget(void){
+  uint64_t    nBase = 0, r = 0, nSymbol, initNSymbol;
+  uint32_t    n, k, idxPos;
+  PARSER      *PA = CreateParser();
+  CBUF        *symBuf = CreateCBuffer(BUFFER_SIZE, BGUARD);
+  uint8_t     sym, *pos;
 
-/*
-  FILE      *Reader = Fopen(P->Con.name, "r");
-  char      name[MAX_FILENAME];
-  sprintf(name, ".map%u", T.id+1);
-  FILE      *Writter = Fopen(concatenate(P->positions, name), "w");
-  int64_t   nBaseRelative = 0, nBaseAbsolute = 0, idxPos = 0;
-  uint32_t  k, r = 0;
-  int32_t   action;
-  PARSER    *PA = CreateParser();
-  CBUF      *symBuf = CreateCBuffer(BUFFER_SIZE, BGUARD);
-  uint8_t   *readBuf = (uint8_t *) Calloc(BUFFER_SIZE, sizeof(uint8_t)), sym,
-            *conName = (uint8_t *) Calloc(MAX_CONTIG_NAME, sizeof(uint8_t));
-  RCLASS    *Mod = CreateRClass(P->repeats, P->minimum, P->kmer, P->inversion);
+  FileType(PA, stdin);
+  if(PA->type != 2){
+    fprintf(stderr, "Error: input file must be in FASTQ format!\n");
+    exit(1);
+    }
 
-  Mod->nBases = P->Ref.nBases;
-  while((k = fread(readBuf, 1, BUFFER_SIZE, Reader)))
-    for(idxPos = 0 ; idxPos < k ; ++idxPos){
-      sym = readBuf[idxPos];
-      if((action = ParseSym(PA, sym)) < 0){
-        switch(action){
-          case -1: // IT IS THE BEGGINING OF THE HEADER
-            if(PA->nRead > 1 && Mod->nRM > 0)
-              ResetAllRMs(Mod, Head, nBaseRelative, nBaseAbsolute, conName, 
-              Writter);
-            nBaseRelative = 0;
-            r = 0;
-          break;
-          case -2: // IT IS THE '\n' HEADER END
-            conName[r] = '\0';
-          break;
-          case -3: // IF IS A SYMBOL OF THE HEADER
-            if(r >= MAX_CONTIG_NAME-1)
-              conName[r] = '\0';
-            else{ 
-              if(sym == ' '){
-                if(r == 0) continue;
-                else       sym = '_'; // PROTECT SPACES WITH UNDERL
-                }
-              conName[r++] = sym;        
-              }
-          break;
-          case -99: // IF IS A SIMPLE FORMAT BREAK
-          break;
-          default:
-            fprintf(stderr, "ERROR: Unknown action!\n");
-            exit(1);
-          }
-        continue; // GO TO NEXT SYMBOL
-        }
+  srand(0);
 
-      if((sym = DNASymToNum(sym)) == 4){
-        if(Mod->nRM > 0 && PA->nRead % P->nThreads == T.id) 
-          ResetAllRMs(Mod, Head, nBaseRelative, nBaseAbsolute, conName, 
-          Writter);
-        ++nBaseRelative;
-        ++nBaseAbsolute;
-        continue;
-        }
-      
+  Read *Read = CreateRead(10000, 40000);
+  while((Read = GetRead(stdin, Read)) != NULL){
+
+    nBase = strlen(Read->bases) - 1; // IT ALSO LOADS '\n' AT THE END
+
+    for(idxPos = 0 ; idxPos < nBase ; ++idxPos){
+
+      sym = Read->bases[idxPos];
+      if(sym == 'N') sym = rand() % 4; 
+      else           sym = DNASymToNum(sym);
       symBuf->buf[symBuf->idx] = sym;
-      GetIdxRM   (symBuf->buf+symBuf->idx, Mod);
-      GetIdxRevRM(symBuf->buf+symBuf->idx, Mod);
 
-      if(PA->nRead % P->nThreads == T.id){
-        if(nBaseRelative >= Mod->kmer){  // PROTECTING THE BEGGINING OF K-SIZE
-          UpdateRMs(Mod, Seq->buf, nBaseRelative, sym);
-          StopRMs(Mod, Head, nBaseRelative, nBaseAbsolute, conName, Writter);
-          StartMultipleRMs(Mod, Hash, nBaseRelative, nBaseAbsolute);
-          }
-        }
-
+      n = 0;
+      pos = &symBuf->buf[symBuf->idx-1];
+      //GetPModelIdx(pos, CM);
       UpdateCBuffer(symBuf);
-      ++nBaseRelative;
-      ++nBaseAbsolute;
       }
 
-  P->Con.nBases = nBaseAbsolute;
-  Free(readBuf);
-  Free(conName);
+    // TODO: EVALUATE BASES -> FUZZY MODE
+    //ResetModelsAndParam(symBuf, Shadow, CMW);
+    PA->nRead++;
+    }
+
   RemoveCBuffer(symBuf);
   RemoveParser(PA);
-  RemoveRClass(Mod);
-  fclose(Writter);
-  fclose(Reader);
-*/
   }
 
 //////////////////////////////////////////////////////////////////////////////
