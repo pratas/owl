@@ -60,6 +60,13 @@ void UpdateRM(RMODEL *R, HASH *H, uint64_t pos){
   }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// GET THE POSITION IN THE HASH
+//
+int64_t GetPositionRM(RMODEL *R, HASH *H){
+  return GetHashPosition(H, R->idx);
+  }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // REMOVE PERMANENTLY RMODEL
 //
 void RemoveRModel(RMODEL *R){

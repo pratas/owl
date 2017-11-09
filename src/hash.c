@@ -85,3 +85,24 @@ void InsertKmerPos(HASH *H, uint64_t key, uint32_t pos){
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+int64_t GetHashPosition(HASH *H, uint64_t key){
+  uint32_t n, h = key % HSIZE;
+  #ifdef LOWP
+  uint16_t b = key & 0xffff;
+  #endif
+
+  for(n = 0 ; n < H->size[h] ; ++n)
+    #ifdef LOWP
+    if(H->ent[h][n].key == b){
+    #else
+    if(H->ent[h][n].key == key){
+    #endif
+      return H->ent[h][n].pos;
+      }
+ 
+  return -1;
+  }
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+

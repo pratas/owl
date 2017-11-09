@@ -20,7 +20,7 @@
 #include "common.h"
 #include "rmodel.h"
 
-HASH     *Hash; // HASH MEMORY IS PUBLIC
+HASH *Hash; // HASH MEMORY IS PUBLIC
 
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - C O M P R E S S I N G - - - - - - - - - - - - - 
@@ -30,6 +30,7 @@ void MapTarget(void){
   PARSER      *PA = CreateParser();
   CBUF        *symBuf = CreateCBuffer(BUFFER_SIZE, BGUARD);
   uint8_t     sym, *pos;
+  RMODEL      *RM = CreateRModel(P->minimum, P->kmer);
 
   FileType(PA, stdin);
   if(PA->type != 2){
@@ -43,6 +44,8 @@ void MapTarget(void){
   while((Read = GetRead(stdin, Read)) != NULL){
 
     nBase = strlen(Read->bases) - 1; // IT ALSO LOADS '\n' AT THE END
+    int64_t positions[nBase+1];
+    uint64_t base = 0;
 
     for(idxPos = 0 ; idxPos < nBase ; ++idxPos){
 
@@ -53,7 +56,10 @@ void MapTarget(void){
 
       n = 0;
       pos = &symBuf->buf[symBuf->idx-1];
-      //GetPModelIdx(pos, CM);
+      GetIdxRM(pos, RM);
+      if(++base > P->kmer)
+        positions[base-P->kmer-1] = GetPositionRM(RM, Hash);
+      ++base;
       UpdateCBuffer(symBuf);
       }
 
@@ -62,6 +68,7 @@ void MapTarget(void){
     PA->nRead++;
     }
 
+  RemoveRModel(RM);
   RemoveCBuffer(symBuf);
   RemoveParser(PA);
   }

@@ -27,6 +27,7 @@ uint64_t   CalcMult         (uint32_t);
 RMODEL     *CreateRModel    (uint32_t, uint32_t);
 uint64_t   GetIdxRM         (uint8_t *, RMODEL *);
 void       UpdateRM         (RMODEL *, HASH *, uint64_t);
+int64_t    GetPositionRM    (RMODEL *, HASH *);
 void       ResetIdxRM       (RMODEL *);
 void       RemoveRModel     (RMODEL *);
 
