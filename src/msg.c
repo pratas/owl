@@ -14,7 +14,6 @@ void PrintMenu(void){
   "  -v                         verbose mode (more information),            \n"
   "  -k <k-mer>                 k-mer size [1;20],                          \n"
   "  -m <minimum>               minimum block size,                         \n"
-  "  -n <nThreads>              number of threads,                          \n"
   "                                                                         \n"
   "Mandatory arguments:                                                     \n"
   "                                                                         \n"

@@ -23,6 +23,42 @@
 HASH *Hash; // HASH MEMORY IS PUBLIC
 
 //////////////////////////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - S O R T I N G - - - - - - - - - - - - - - - -
+void MaxHeapify(int64_t a[], int i, int size){
+  int64_t tmp, largest;
+  int64_t l = (2 * i) + 1;
+  int64_t r = (2 * i) + 2;
+  if((l <= size) && (a[l] > a[i])) largest = l;
+  else                             largest = i;
+  if((r <= size) && (a[r] > a[largest])) largest = r;
+  if(largest != i){
+    tmp        = a[i];
+    a[i]       = a[largest];
+    a[largest] = tmp;
+    MaxHeapify(a, largest, size);
+    }
+  }
+
+void BuildMaxHeap(int64_t a[], int size){
+  int i;
+  for(i = size/2; i >= 0; i--)
+    MaxHeapify(a, i, size);
+  }
+
+void HeapSort(int64_t a[], int size){
+  int64_t tmp;
+  int i;
+  BuildMaxHeap(a, size);
+  for(i = size; i > 0; i--){
+    tmp  = a[i];
+    a[i] = a[0];
+    a[0] = tmp;
+    --size;
+    MaxHeapify(a, 0, size);
+    }
+  }
+
+//////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - C O M P R E S S I N G - - - - - - - - - - - - - 
 void MapTarget(void){
   uint64_t    nBase = 0, r = 0, nSymbol, initNSymbol;
@@ -44,7 +80,7 @@ void MapTarget(void){
   while((Read = GetRead(stdin, Read)) != NULL){
 
     nBase = strlen(Read->bases) - 1; // IT ALSO LOADS '\n' AT THE END
-    int64_t positions[nBase+1];
+    int64_t positions[nBase+1], idx = 0;
     uint64_t base = 0;
 
     for(idxPos = 0 ; idxPos < nBase ; ++idxPos){
@@ -58,15 +94,24 @@ void MapTarget(void){
       pos = &symBuf->buf[symBuf->idx-1];
       GetIdxRM(pos, RM);
       if(++base > P->kmer)
-        positions[base-P->kmer-1] = GetPositionRM(RM, Hash);
-      ++base;
+        positions[idx++] = GetPositionRM(RM, Hash);
       UpdateCBuffer(symBuf);
       }
 
     // TODO: EVALUATE BASES -> FUZZY MODE
-    //ResetModelsAndParam(symBuf, Shadow, CMW);
+
+    HeapSort(positions, idx-1);
+
+    int x;
+    for (x = 0; x < idx; ++x)
+      printf("%li,", positions[x]);
+    printf("\n");
+    
     PA->nRead++;
     }
+
+  if(P->verbose)
+    ; //fprintf(stderr, "Processed %"PRI64" reads.\n");
 
   RemoveRModel(RM);
   RemoveCBuffer(symBuf);
@@ -158,13 +203,7 @@ int32_t main(int argc, char *argv[]){
   P->force      = ArgsState (DEF_FORCE,   p, argc, "-F" );
   P->kmer       = ArgsNum   (DEF_KMER,    p, argc, "-k", MIN_KMER, MAX_KMER);
   P->minimum    = ArgsNum   (DEF_MINI,    p, argc, "-m", MIN_MINI, MAX_MINI);
-  P->nThreads   = ArgsNum   (DEF_THRE,    p, argc, "-n", MIN_THRE, MAX_THRE);
   P->reference  = argv[argc-1];
-
-  if(P->minimum < P->kmer){
-    fprintf(stderr, "  [x] Error: minimum block size must be >= than k-mer!\n");
-    exit(1);
-    }
 
   fprintf(stderr, "\n");
   if(P->verbose) PrintArgs(P);

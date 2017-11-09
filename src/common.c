@@ -465,11 +465,8 @@ void PrintArgs(Parameters *P){
   ? "no" : "yes");
   fprintf(stderr, "Force mode ......................... %s\n", P->force == 0 ? 
   "no" : "yes");
-  fprintf(stderr, "Using inversions ................... %s\n", P->inversion == 
-   0 ? "no" : "yes");
   fprintf(stderr, "K-mer size ......................... %u\n", P->kmer);
   fprintf(stderr, "Minimum block size ................. %u\n", P->minimum);
-  fprintf(stderr, "Number of threads .................. %u\n", P->nThreads);
   fprintf(stderr, "Reference filename ................. %s\n", P->reference);
   fprintf(stderr, "\n");
   }
