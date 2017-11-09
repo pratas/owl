@@ -24,7 +24,7 @@ void PrintMenu(void){
   "                                                                         \n"
   "Example:                                                                 \n"
   "                                                                         \n"
-  "  ./OWL -v -k 20 -m 50 reference.fa < ex1.fq > ex1-sort.fq               \n"
+  "  ./OWL -v -k 16 -m 40 reference.fa < ex1.fq > ex1-sort.fq               \n"
   "                                                                         \n"
   "Report bugs to <pratas@ua.pt>.                                           \n");
   }

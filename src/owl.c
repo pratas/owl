@@ -59,10 +59,51 @@ void HeapSort(int64_t a[], int size){
   }
 
 //////////////////////////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - - E L A S T I C - - - - - - - - - - - - - - -
+int64_t CumulativeElastic(int64_t a[], int64_t size){
+  int64_t x;
+  int64_t pivot   = a[0];
+  int64_t elastic = 0;
+  int64_t best    = 0;
+
+  for(x = 1 ; x < size ; ++x){
+    if(a[x] < pivot + P->minimum){
+      ++elastic;
+      best = pivot;
+      }
+    else{
+      pivot = a[x];
+      x     = x + elastic;
+      }
+    }
+
+  return best;
+  }
+
+//////////////////////////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - - W R I T E   R E A D - - - - - - - - - - - - -
+void WriteRead(Read *Read, int64_t pos){
+  int64_t x;
+
+  fprintf(stdout, "%li%c", pos, 20);
+  x = 0;
+  while(Read->header1[1][x] != '\n')
+    fprintf(stdout, "%c", Read->header1[1][x++]); 
+  fprintf(stdout, "%c", 20); // SPLITTER
+  x = 0;
+  while(Read->bases[x] != '\n')
+    fprintf(stdout, "%c", Read->bases[x++]);
+  fprintf(stdout, "%c", 20); // SPLITTER
+  x = 0;
+  while(Read->scores[x] != '\n')
+    fprintf(stdout, "%c", Read->scores[x++]);
+  }
+
+//////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - C O M P R E S S I N G - - - - - - - - - - - - - 
 void MapTarget(void){
-  uint64_t    nBase = 0, r = 0, nSymbol, initNSymbol;
-  uint32_t    n, k, idxPos;
+  int64_t     nBase = 0;
+  uint32_t    n, idxPos;
   PARSER      *PA = CreateParser();
   CBUF        *symBuf = CreateCBuffer(BUFFER_SIZE, BGUARD);
   uint8_t     sym, *pos;
@@ -74,7 +115,7 @@ void MapTarget(void){
     exit(1);
     }
 
-  srand(0);
+  srand(0); // ENSURE THE SAME RUN PRODUCES THE SAME RANDOM RESULTS
 
   Read *Read = CreateRead(10000, 40000);
   while((Read = GetRead(stdin, Read)) != NULL){
@@ -98,20 +139,12 @@ void MapTarget(void){
       UpdateCBuffer(symBuf);
       }
 
-    // TODO: EVALUATE BASES -> FUZZY MODE
-
     HeapSort(positions, idx-1);
+    int64_t read_idx = CumulativeElastic(positions, idx-1);
+    WriteRead(Read, read_idx);
 
-    int x;
-    for (x = 0; x < idx; ++x)
-      printf("%li,", positions[x]);
-    printf("\n");
-    
     PA->nRead++;
     }
-
-  if(P->verbose)
-    ; //fprintf(stderr, "Processed %"PRI64" reads.\n");
 
   RemoveRModel(RM);
   RemoveCBuffer(symBuf);
