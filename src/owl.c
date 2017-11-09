@@ -59,6 +59,13 @@ void HeapSort(int64_t a[], int size){
   }
 
 //////////////////////////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - O R D E R   R E A D S - - - - - - - - - - - - -
+void OrderReads(void){
+
+
+  }
+
+//////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - - - E L A S T I C - - - - - - - - - - - - - - -
 int64_t CumulativeElastic(int64_t a[], int64_t size){
   int64_t x;
@@ -211,6 +218,10 @@ void MapAction(){
 
   fprintf(stderr, "  [+] Map contigs ... \n");
   MapTarget();
+  fprintf(stderr, "\r      Done!                   \n");
+
+  fprintf(stderr, "  [+] Order reads ... \n");
+  OrderReads();
   fprintf(stderr, "\r      Done!                   \n");
   }
 
