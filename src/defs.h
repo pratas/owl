@@ -31,6 +31,7 @@ typedef int8_t   I8;
 #define BUFFER_SIZE            262144      
 #define DEF_VERSION            0
 #define DEF_EXAMPLE            0
+#define DEF_ORDER              0
 #define DEFAULT_FILTERSIZE     500
 #define DEFAULT_MINBLOCK       100
 #define MIN_CTX                1

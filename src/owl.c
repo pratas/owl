@@ -62,9 +62,14 @@ void HeapSort(int64_t a[], int size){
 // - - - - - - - - - O R D E R   A N D   W R I T E   R E A D S - - - - - - - -
 void OrderReads(char *name, uint32_t mem){
   char fname[MAX_LINE_SIZE];
-  sprintf(fname, "sort -T . -S %uM %s", mem, name);
-  FILE *F = Popen(fname, "r");
   char buffer[MAX_LINE_SIZE];
+
+  if(P->order)
+    sprintf(fname, "sort -T . -S %uM %s", mem, name);
+  else
+    sprintf(fname, "cat %s", name);
+
+  FILE *F = Popen(fname, "r");
 
   while(fgets(buffer, MAX_LINE_SIZE, F)){
 
@@ -300,6 +305,7 @@ int32_t main(int argc, char *argv[]){
 
   P->verbose    = ArgsState (DEF_VERBOSE, p, argc, "-v" );
   P->force      = ArgsState (DEF_FORCE,   p, argc, "-F" );
+  P->order      = ArgsState (DEF_ORDER,   p, argc, "-N" );
   P->kmer       = ArgsNum   (DEF_KMER,    p, argc, "-k", MIN_KMER, MAX_KMER);
   P->minimum    = ArgsNum   (DEF_MINI,    p, argc, "-m", MIN_MINI, MAX_MINI);
   P->reference  = argv[argc-1];

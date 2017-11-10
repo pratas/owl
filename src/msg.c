@@ -12,6 +12,7 @@ void PrintMenu(void){
   "  -h                         give this help,                             \n"
   "  -V                         display version number,                     \n"
   "  -v                         verbose mode (more information),            \n"
+  "  -N                         does NOT sort reads,                        \n"
   "  -k <k-mer>                 k-mer size [1;20],                          \n"
   "  -m <minimum>               minimum block size,                         \n"
   "                                                                         \n"
