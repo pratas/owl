@@ -71,7 +71,7 @@ void OrderReads(char *name, uint32_t mem){
     fprintf(stdout, "@owl ");
 
     int32_t n = 0, x = 0, step = 0, init = 0;
-    while(buffer[x] != '\n'){
+    do{
 
       if(buffer[x] == 20 && step == 0){ // CUT THE PREFIX NUMBER
         init = x + 1;
@@ -92,7 +92,7 @@ void OrderReads(char *name, uint32_t mem){
 
       if(buffer[x] == 20 && step == 2){
         for(n = init ; n < x ; ++n)
-          fprintf(stdout, "%c", buffer[x]);
+          fprintf(stdout, "%c", buffer[n]);
         fprintf(stdout, "\n+\n");        
         init = x + 1;
         step = 3;
@@ -100,18 +100,19 @@ void OrderReads(char *name, uint32_t mem){
         continue;
         }
  
-      if(buffer[x] == 20 && step == 3){
+      if(buffer[x] == '\n' && step == 3){
         for(n = init ; n < x ; ++n)
-          fprintf(stdout, "%c", buffer[x]);
+          fprintf(stdout, "%c", buffer[n]);
         fprintf(stdout, "\n");     
         init = x + 1;
         step = 0;
         ++x;
-        continue;
+        break;
         }
 
-      ++x;
       }
+    while(buffer[++x] != '\n');
+
     }
 
   pclose(F);
