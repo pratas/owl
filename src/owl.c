@@ -73,23 +73,28 @@ void OrderReads(char *name, uint32_t mem){
     int32_t n = 0, x = 0, step = 0, init = 0;
     while(buffer[x] != '\n'){
 
-      if(buffer[x] == 20 && step == 0){
-        fprintf(stdout, "%c",   buffer[x-3]);        
-        fprintf(stdout, "%c",   buffer[x-2]);        
-        fprintf(stdout, "%c\n", buffer[x-1]);        
+      if(buffer[x] == 20 && step == 0){ // CUT THE PREFIX NUMBER
         init = x + 1;
         step = 1;
         }
 
       if(buffer[x] == 20 && step == 1){
+        fprintf(stdout, "%c",   buffer[x-3]);        
+        fprintf(stdout, "%c",   buffer[x-2]);        
+        fprintf(stdout, "%c\n", buffer[x-1]);        
+        init = x + 1;
+        step = 2;
+        }
+
+      if(buffer[x] == 20 && step == 2){
         for(n = init ; n < x ; ++n)
           fprintf(stdout, "%c", buffer[x]);
         fprintf(stdout, "\n+\n");        
         init = x + 1;
-        step = 2;
+        step = 3;
         }
  
-      if(buffer[x] == 20 && step == 1){
+      if(buffer[x] == 20 && step == 3){
         for(n = init ; n < x ; ++n)
           fprintf(stdout, "%c", buffer[x]);
         fprintf(stdout, "\n");     
@@ -143,6 +148,7 @@ void WriteRead(Read *Read, int64_t pos, FILE *F){
   x = 0;
   while(Read->scores[x] != '\n')
     fprintf(F, "%c", Read->scores[x++]);
+  fprintf(F, "\n");
   }
 
 //////////////////////////////////////////////////////////////////////////////
