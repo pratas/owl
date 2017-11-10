@@ -76,6 +76,8 @@ void OrderReads(char *name, uint32_t mem){
       if(buffer[x] == 20 && step == 0){ // CUT THE PREFIX NUMBER
         init = x + 1;
         step = 1;
+        ++x;
+        continue;
         }
 
       if(buffer[x] == 20 && step == 1){
@@ -84,6 +86,8 @@ void OrderReads(char *name, uint32_t mem){
         fprintf(stdout, "%c\n", buffer[x-1]);        
         init = x + 1;
         step = 2;
+        ++x;
+        continue;
         }
 
       if(buffer[x] == 20 && step == 2){
@@ -92,6 +96,8 @@ void OrderReads(char *name, uint32_t mem){
         fprintf(stdout, "\n+\n");        
         init = x + 1;
         step = 3;
+        ++x;
+        continue;
         }
  
       if(buffer[x] == 20 && step == 3){
@@ -100,6 +106,8 @@ void OrderReads(char *name, uint32_t mem){
         fprintf(stdout, "\n");     
         init = x + 1;
         step = 0;
+        ++x;
+        continue;
         }
 
       ++x;
