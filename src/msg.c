@@ -5,7 +5,7 @@
 void PrintMenu(void){
   fprintf(stderr,
   "Usage: OWL [OPTIONS]... [FILE] [FILE]                                    \n"
-  "A tool to sort FASTQ reads using average mapping.                        \n"
+  "A tool to sort FASTQ reads using cluster mapping.                        \n"
   "                                                                         \n"
   "Non-mandatory arguments:                                                 \n"
   "                                                                         \n"
@@ -36,7 +36,7 @@ void PrintVersion(void){
   "                         |      OWL %u.%u      |                         \n"
   "                         =====================                           \n"
   "                                                                         \n"
-  "            A tool to sort FASTQ reads using average mapping             \n"
+  "            A tool to sort FASTQ reads using cluster mapping             \n"
   "                                                                         \n"
   "Copyright (C) 2017-2018 University of Aveiro. This is a Free software.   \n"
   "You may redistribute copies of it under the terms of the GNU - General   \n"
