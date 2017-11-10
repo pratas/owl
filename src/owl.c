@@ -271,7 +271,7 @@ void MapAction(){
   LoadReference();
   fprintf(stderr, "      Done!                \n");
 
-  fprintf(stderr, "  [+] Map contigs ... \n");
+  fprintf(stderr, "  [+] Mapping reads ... \n");
   MapTarget(name);
   fprintf(stderr, "      Done!                \n");
 
