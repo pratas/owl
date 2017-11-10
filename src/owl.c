@@ -59,10 +59,49 @@ void HeapSort(int64_t a[], int size){
   }
 
 //////////////////////////////////////////////////////////////////////////////
-// - - - - - - - - - - - - - - O R D E R   R E A D S - - - - - - - - - - - - -
-void OrderReads(void){
+// - - - - - - - - - O R D E R   A N D   W R I T E   R E A D S - - - - - - - -
+void OrderReads(char *name, uint32_t mem){
+  char fname[MAX_LINE_SIZE];
+  sprintf(fname, "sort -T . -S %uM %s", mem, name);
+  FILE *F = Popen(fname, "r");
+  char buffer[MAX_LINE_SIZE];
 
+  while(fgets(buffer, MAX_LINE_SIZE, F)){
 
+    fprintf(stdout, "@owl ");
+
+    int32_t n = 0, x = 0, step = 0, init = 0;
+    while(buffer[x] != '\n'){
+
+      if(buffer[x] == 20 && step == 0){
+        fprintf(stdout, "%c",   buffer[x-3]);        
+        fprintf(stdout, "%c",   buffer[x-2]);        
+        fprintf(stdout, "%c\n", buffer[x-1]);        
+        init = x + 1;
+        step = 1;
+        }
+
+      if(buffer[x] == 20 && step == 1){
+        for(n = init ; n < x ; ++n)
+          fprintf(stdout, "%c", buffer[x]);
+        fprintf(stdout, "\n+\n");        
+        init = x + 1;
+        step = 2;
+        }
+ 
+      if(buffer[x] == 20 && step == 1){
+        for(n = init ; n < x ; ++n)
+          fprintf(stdout, "%c", buffer[x]);
+        fprintf(stdout, "\n");     
+        init = x + 1;
+        step = 0;
+        }
+
+      ++x;
+      }
+    }
+
+  pclose(F);
   }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -89,32 +128,33 @@ int64_t CumulativeElastic(int64_t a[], int64_t size){
 
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - - W R I T E   R E A D - - - - - - - - - - - - -
-void WriteRead(Read *Read, int64_t pos){
+void WriteRead(Read *Read, int64_t pos, FILE *F){
   int64_t x;
 
-  fprintf(stdout, "%li%c", pos, 20);
+  fprintf(F, "%li%c", pos, 20);
   x = 0;
   while(Read->header1[1][x] != '\n')
-    fprintf(stdout, "%c", Read->header1[1][x++]); 
-  fprintf(stdout, "%c", 20); // SPLITTER
+    fprintf(F, "%c", Read->header1[1][x++]); 
+  fprintf(F, "%c", 20); // SPLITTER
   x = 0;
   while(Read->bases[x] != '\n')
-    fprintf(stdout, "%c", Read->bases[x++]);
-  fprintf(stdout, "%c", 20); // SPLITTER
+    fprintf(F, "%c", Read->bases[x++]);
+  fprintf(F, "%c", 20); // SPLITTER
   x = 0;
   while(Read->scores[x] != '\n')
-    fprintf(stdout, "%c", Read->scores[x++]);
+    fprintf(F, "%c", Read->scores[x++]);
   }
 
 //////////////////////////////////////////////////////////////////////////////
-// - - - - - - - - - - - - - - C O M P R E S S I N G - - - - - - - - - - - - - 
-void MapTarget(void){
+// - - - - - - - - - - - - - - - - - - M A P - - - - - - - - - - - - - - - - - 
+void MapTarget(char *name){
   int64_t     nBase = 0;
   uint32_t    n, idxPos;
   PARSER      *PA = CreateParser();
   CBUF        *symBuf = CreateCBuffer(BUFFER_SIZE, BGUARD);
   uint8_t     sym, *pos;
   RMODEL      *RM = CreateRModel(P->minimum, P->kmer);
+  FILE        *F = Fopen(name, "w"); 
 
   FileType(PA, stdin);
   if(PA->type != 2){
@@ -148,11 +188,12 @@ void MapTarget(void){
 
     HeapSort(positions, idx-1);
     int64_t read_idx = CumulativeElastic(positions, idx-1);
-    WriteRead(Read, read_idx);
+    WriteRead(Read, read_idx, F);
 
     PA->nRead++;
     }
 
+  fclose(F);
   RemoveRModel(RM);
   RemoveCBuffer(symBuf);
   RemoveParser(PA);
@@ -204,9 +245,7 @@ void LoadReference(void){
 // - - - - - - - - - - - - - - - - M A P P E R - - - - - - - - - - - - - - - -
 void MapAction(){
   uint32_t n;
-  pthread_t t[P->nThreads];
-  Threads  *T = (Threads *) Calloc(P->nThreads, sizeof(Threads));
-  for(n = 0 ; n < P->nThreads ; ++n) T[n].id = n; 
+  char *name = "tmp-file-owl.owl";
 
   fprintf(stderr, "  [+] Building hash ...\n");
   Hash = CreateHash();
@@ -217,12 +256,12 @@ void MapAction(){
   fprintf(stderr, "      Done!                \n");
 
   fprintf(stderr, "  [+] Map contigs ... \n");
-  MapTarget();
-  fprintf(stderr, "\r      Done!                   \n");
+  MapTarget(name);
+  fprintf(stderr, "      Done!                \n");
 
   fprintf(stderr, "  [+] Order reads ... \n");
-  OrderReads();
-  fprintf(stderr, "\r      Done!                   \n");
+  OrderReads(name, 4096); // 4096 -> 4 GB of RAM
+  fprintf(stderr, "      Done!                \n");
   }
 
 //////////////////////////////////////////////////////////////////////////////

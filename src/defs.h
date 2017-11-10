@@ -27,6 +27,7 @@ typedef int8_t   I8;
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+#define MAX_LINE_SIZE          100000
 #define BUFFER_SIZE            262144      
 #define DEF_VERSION            0
 #define DEF_EXAMPLE            0

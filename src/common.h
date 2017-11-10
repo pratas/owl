@@ -9,6 +9,7 @@
 
 double      BoundDouble      (double, double, double);
 FILE        *Fopen           (const char *, const char *);
+FILE        *Popen           (const char *, const char *);
 void        UnPackByte       (uint8_t *, uint8_t);
 uint8_t     PackByte         (uint8_t *);
 uint64_t    SumWriteBits     (uint8_t **, int, uint64_t, FILE *, FILE *);

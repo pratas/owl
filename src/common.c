@@ -175,6 +175,18 @@ uint64_t FopenBytesInFile(const char *fn){
   return size;
   }
 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// POPEN FILE
+//
+FILE *Popen(const char *p, const char *m){
+  FILE *F = popen(p, m);
+  if(F == NULL){
+    fprintf(stderr, "[x] Error opening: %s (mode %s). Does it exist?\n", p, m);
+    exit(1);
+    }
+  return F;
+  }
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 uint8_t DNASymToNum(uint8_t symbol)
