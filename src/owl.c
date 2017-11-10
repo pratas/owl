@@ -71,7 +71,8 @@ void OrderReads(char *name, uint32_t mem){
     fprintf(stdout, "@owl ");
 
     int32_t n = 0, x = 0, step = 0, init = 0;
-    do{
+
+    while(buffer[x] != '\n'){
 
       if(buffer[x] == 20 && step == 0){ // CUT THE PREFIX NUMBER
         init = x + 1;
@@ -81,7 +82,6 @@ void OrderReads(char *name, uint32_t mem){
         }
 
       if(buffer[x] == 20 && step == 1){
-        fprintf(stdout, "%c",   buffer[x-3]);        
         fprintf(stdout, "%c",   buffer[x-2]);        
         fprintf(stdout, "%c\n", buffer[x-1]);        
         init = x + 1;
@@ -100,18 +100,18 @@ void OrderReads(char *name, uint32_t mem){
         continue;
         }
  
-      if(buffer[x] == '\n' && step == 3){
+      if(buffer[x] == 20 && step == 3){
         for(n = init ; n < x ; ++n)
           fprintf(stdout, "%c", buffer[n]);
         fprintf(stdout, "\n");     
         init = x + 1;
         step = 0;
         ++x;
-        break;
+        continue;
         }
 
+      ++x;
       }
-    while(buffer[++x] != '\n');
 
     }
 
@@ -157,6 +157,7 @@ void WriteRead(Read *Read, int64_t pos, FILE *F){
   x = 0;
   while(Read->scores[x] != '\n')
     fprintf(F, "%c", Read->scores[x++]);
+  fprintf(F, "%c", 20); // SPLITTER
   fprintf(F, "\n");
   }
 
