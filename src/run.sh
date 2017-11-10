@@ -4,6 +4,7 @@ rm fqz* REP* OWL* MINIMIZED* OUTPUT* DECOMPRESSED* FINAL* -fr
 rm -fr owl/
 git clone https://github.com/pratas/owl.git
 cd owl/src/
+cmake .
 make
 cp OWL ../../
 cd ../../
