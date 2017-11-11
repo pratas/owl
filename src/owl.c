@@ -65,7 +65,7 @@ void OrderReads(char *name, uint32_t mem){
   char buffer[MAX_LINE_SIZE];
 
   if(P->order)
-    sprintf(fname, "sort -T . -S %uM %s", mem, name);
+    sprintf(fname, "sort -n -T . -S %uM %s", mem, name); // -n -g : add DNA bases on front
   else
     sprintf(fname, "cat %s", name);
 
