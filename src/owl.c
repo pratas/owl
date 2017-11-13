@@ -87,7 +87,8 @@ void OrderReads(uint32_t mem){
 
   while(fgets(buffer, MAX_LINE_SIZE, F)){
 
-    fprintf(stdout, "@owl ");
+    if(!P->header)
+      fprintf(stdout, "@owl ");
 
     int32_t n = 0, x = 0, step = 0, init = 0;
 
@@ -101,8 +102,16 @@ void OrderReads(uint32_t mem){
         }
 
       if(buffer[x] == 20 && step == 1){
-        fprintf(stdout, "%c",   buffer[x-2]);        
-        fprintf(stdout, "%c\n", buffer[x-1]);        
+        if(P->header){
+          fprintf(stdout, "@");
+          for(n = init ; n < x ; ++n)
+            fprintf(stdout, "%c", buffer[n]);
+          fprintf(stdout, "\n");
+          }
+        else{
+          fprintf(stdout, "%c",   buffer[x-2]);        
+          fprintf(stdout, "%c\n", buffer[x-1]);        
+          }
         init = x + 1;
         step = 2;
         ++x;
@@ -299,7 +308,6 @@ void MapAction(){
   fprintf(stderr, "  [+] Creating random label ...\n");
   CreateLabel();
   fprintf(stderr, "      Done!                \n");
-  
 
   fprintf(stderr, "  [+] Building hash ...\n");
   Hash = CreateHash();
