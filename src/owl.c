@@ -23,6 +23,20 @@
 HASH *Hash; // HASH MEMORY IS PUBLIC
 
 //////////////////////////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - R A N D   S T R I N G - - - - - - - - - - - - - -
+char *RandString(int size){
+  int x;
+
+  srand(time(NULL));               // SEED WITH TIME
+  char *label = (char *) Malloc((size + 1) * sizeof(char));
+  for(x = 0 ; x < size ; ++x)
+    label[x] = rand() % 25 + 65;
+  label[x] = 0; // null terminator
+
+  return label;
+  }
+
+//////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - - S O R T I N G - - - - - - - - - - - - - - - -
 void MaxHeapify(int64_t a[], int i, int size){
   int64_t tmp, largest;
@@ -60,14 +74,14 @@ void HeapSort(int64_t a[], int size){
 
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - O R D E R   A N D   W R I T E   R E A D S - - - - - - - -
-void OrderReads(char *name, uint32_t mem){
+void OrderReads(uint32_t mem){
   char fname[MAX_LINE_SIZE];
   char buffer[MAX_LINE_SIZE];
 
   if(!P->order)
-    sprintf(fname, "sort -n -T . -S %uM %s", mem, name); // -n -g : add DNA bases on front
+    sprintf(fname, "sort -n -T . -S %uM %s", mem, P->label); // -n numeric sort
   else
-    sprintf(fname, "cat %s", name);
+    sprintf(fname, "cat %s", P->label);
 
   FILE *F = Popen(fname, "r");
 
@@ -168,15 +182,23 @@ void WriteRead(Read *Read, int64_t pos, FILE *F){
   }
 
 //////////////////////////////////////////////////////////////////////////////
+// - - - - - - - - - - - - - - C R E A T E   L A B E L - - - - - - - - - - - -
+void CreateLabel(void){
+  char *extension = ".owl";
+  P->label = concatenate(RandString(12), extension);
+  fprintf(stderr, "      Label: %s\n", P->label);
+  }
+
+//////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - - - - - M A P - - - - - - - - - - - - - - - - - 
-void MapTarget(char *name){
+void MapTarget(void){
   int64_t     nBase = 0;
   uint32_t    n, idxPos;
   PARSER      *PA = CreateParser();
   CBUF        *symBuf = CreateCBuffer(BUFFER_SIZE, BGUARD);
   uint8_t     sym, *pos;
   RMODEL      *RM = CreateRModel(P->minimum, P->kmer);
-  FILE        *F = Fopen(name, "w"); 
+  FILE        *F = Fopen(P->label, "w"); 
 
   FileType(PA, stdin);
   if(PA->type != 2){
@@ -271,8 +293,11 @@ void LoadReference(void){
 //////////////////////////////////////////////////////////////////////////////
 // - - - - - - - - - - - - - - - - M A P P E R - - - - - - - - - - - - - - - -
 void MapAction(){
-  uint32_t n;
-  char *name = "tmp-file-owl.owl";
+
+  fprintf(stderr, "  [+] Creating random label ...\n");
+  CreateLabel();
+  fprintf(stderr, "      Done!                \n");
+  
 
   fprintf(stderr, "  [+] Building hash ...\n");
   Hash = CreateHash();
@@ -283,11 +308,11 @@ void MapAction(){
   fprintf(stderr, "      Done!                \n");
 
   fprintf(stderr, "  [+] Mapping reads ... \n");
-  MapTarget(name);
+  MapTarget();
   fprintf(stderr, "      Done!                \n");
 
   fprintf(stderr, "  [+] Order reads ... \n");
-  OrderReads(name, 4096); // 4096 -> 4 GB of RAM
+  OrderReads(4096); // 4096 -> 4 GB of RAM
   fprintf(stderr, "      Done!                \n");
   }
 

@@ -15,6 +15,7 @@ typedef struct{
   U32      kmer;
   U32      minimum;
   char     *reference;
+  char     *label;
   }
 Parameters;
 
