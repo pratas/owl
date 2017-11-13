@@ -11,7 +11,8 @@ typedef struct{
   U8       verbose;
   U8       force;
   U8       order;
-  U8       link;
+  U8       delete;
+  U8       header;
   U32      kmer;
   U32      minimum;
   char     *reference;

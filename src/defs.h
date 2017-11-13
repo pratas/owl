@@ -32,6 +32,8 @@ typedef int8_t   I8;
 #define DEF_VERSION            0
 #define DEF_EXAMPLE            0
 #define DEF_ORDER              0
+#define DEF_HEADER             0
+#define DEF_DELETE             0
 #define DEFAULT_FILTERSIZE     500
 #define DEFAULT_MINBLOCK       100
 #define MIN_CTX                1

@@ -30,7 +30,7 @@ char *RandString(int size){
   srand(time(NULL));               // SEED WITH TIME
   char *label = (char *) Malloc((size + 1) * sizeof(char));
   for(x = 0 ; x < size ; ++x)
-    label[x] = rand() % 25 + 65;
+    label[x] = rand() % 26 + 65;
   label[x] = 0; // null terminator
 
   return label;
@@ -133,8 +133,10 @@ void OrderReads(uint32_t mem){
       }
 
     }
-
+  
   pclose(F);
+  if(!P->delete)
+    remove(P->label);
   }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -337,6 +339,8 @@ int32_t main(int argc, char *argv[]){
   P->verbose    = ArgsState (DEF_VERBOSE, p, argc, "-v" );
   P->force      = ArgsState (DEF_FORCE,   p, argc, "-F" );
   P->order      = ArgsState (DEF_ORDER,   p, argc, "-N" );
+  P->delete     = ArgsState (DEF_DELETE,  p, argc, "-D" );
+  P->header     = ArgsState (DEF_HEADER,  p, argc, "-W" );
   P->kmer       = ArgsNum   (DEF_KMER,    p, argc, "-k", MIN_KMER, MAX_KMER);
   P->minimum    = ArgsNum   (DEF_MINI,    p, argc, "-m", MIN_MINI, MAX_MINI);
   P->reference  = argv[argc-1];
