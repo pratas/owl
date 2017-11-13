@@ -150,8 +150,8 @@ int64_t CumulativeElastic(int64_t a[], int64_t size){
 void WriteRead(Read *Read, int64_t pos, FILE *F){
   int64_t x;
 
-  fprintf(F, "%li\t%c", pos, 20);
-  //fprintf(F, "%li%c", pos, 20);
+  //fprintf(F, "%li\t%c", pos, 20);
+  fprintf(F, "%li%c", pos, 20);
   x = 0;
   while(Read->header1[1][x] != '\n')
     fprintf(F, "%c", Read->header1[1][x++]); 
