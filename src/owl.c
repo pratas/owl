@@ -64,7 +64,7 @@ void OrderReads(char *name, uint32_t mem){
   char fname[MAX_LINE_SIZE];
   char buffer[MAX_LINE_SIZE];
 
-  if(P->order)
+  if(!P->order)
     sprintf(fname, "sort -n -T . -S %uM %s", mem, name); // -n -g : add DNA bases on front
   else
     sprintf(fname, "cat %s", name);
@@ -150,7 +150,8 @@ int64_t CumulativeElastic(int64_t a[], int64_t size){
 void WriteRead(Read *Read, int64_t pos, FILE *F){
   int64_t x;
 
-  fprintf(F, "%li%c", pos, 20);
+  fprintf(F, "%li\t%c", pos, 20);
+  //fprintf(F, "%li%c", pos, 20);
   x = 0;
   while(Read->header1[1][x] != '\n')
     fprintf(F, "%c", Read->header1[1][x++]); 
@@ -202,8 +203,13 @@ void MapTarget(char *name){
       n = 0;
       pos = &symBuf->buf[symBuf->idx-1];
       GetIdxRM(pos, RM);
-      if(++base > P->kmer)
-        positions[idx++] = GetPositionRM(RM, Hash);
+      if(++base > P->kmer){
+        int64_t pos_idx = GetPositionRM(RM, Hash);
+        if(pos_idx == -1)
+          positions[idx++] = rand() % 1099511627776;  // RANDOMIZE POSITION
+        else
+          positions[idx++] = pos_idx;
+        }
       UpdateCBuffer(symBuf);
       }
 
