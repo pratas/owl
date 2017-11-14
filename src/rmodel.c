@@ -25,7 +25,6 @@ uint64_t CalcMult(uint32_t c){
 // CREATES THE RMODEL BASIC STRUCTURE 
 //
 RMODEL *CreateRModel(uint32_t min, uint32_t k){
-  uint32_t n;
 
   RMODEL *R  = (RMODEL *)  Calloc(1,   sizeof(RMODEL));
   R->idx      = 0;

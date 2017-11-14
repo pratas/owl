@@ -37,7 +37,7 @@ Read *CreateRead(uint64_t headerMaxSize, uint64_t readMaxSize){
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 Read *GetRead(FILE *fp, Read *read){
-  int n, c = fgetc(fp);
+  int c = fgetc(fp);
 
   if(c == EOF) return NULL;
 
@@ -72,8 +72,6 @@ Read *GetRead(FILE *fp, Read *read){
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 void PutRead(Read *read, FILE *fp){
-  uint64_t n, nBases;
-
   fputc('@', fp);
   fputs((char *)read->header1[1], fp);
   fputs((char *)read->bases, fp);

@@ -204,7 +204,7 @@ void CreateLabel(void){
 // - - - - - - - - - - - - - - - - - - M A P - - - - - - - - - - - - - - - - - 
 void MapTarget(void){
   int64_t     nBase = 0;
-  uint32_t    n, idxPos;
+  uint32_t    n = 0, idxPos;
   PARSER      *PA = CreateParser();
   CBUF        *symBuf = CreateCBuffer(BUFFER_SIZE, BGUARD);
   uint8_t     sym, *pos;
@@ -263,7 +263,6 @@ void MapTarget(void){
 // - - - - - - - - - - - - - - - R E F E R E N C E - - - - - - - - - - - - - -
 void LoadReference(void){
   FILE      *Reader = Fopen(P->reference, "r");
-  uint32_t  n;
   uint64_t  idx = 0;
   uint64_t  k, idxPos, pos = 0, i = 0;
   PARSER    *PA = CreateParser();
@@ -274,6 +273,7 @@ void LoadReference(void){
   uint64_t  file_length = NBytesInFile(Reader);
   RMODEL    *RM = CreateRModel(P->minimum, P->kmer);
 
+  idx = 0;
   while((k = fread(readBuf, 1, BUFFER_SIZE, Reader)))
     for(idxPos = 0 ; idxPos < k ; ++idxPos){
 

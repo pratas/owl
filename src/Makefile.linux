@@ -1,0 +1,48 @@
+#============================================================================#
+#                OWL 2017-2018 IEETA/DETI, UNIVERSITY OF AVEIRO              #
+#============================================================================#
+BIN    = .
+CC     = gcc
+CPLP   =
+#-----------------------------------------------------------------------------
+CFLAGS = -O3 -Wall $(CPLP)
+#-----------------------------------------------------------------------------
+LIBS   = -lm
+DEPS   = defs.h param.h
+PROGS  = $(BIN)/OWL
+OBJS   = mem.o msg.o seq.o time.o pos.o parser.o common.o buffer.o hash.o \
+         reads.o rmodel.o 
+#-----------------------------------------------------------------------------
+all:
+	$(MAKE) progs
+progs: $(PROGS)
+$(BIN)/OWL: owl.c $(DEPS) $(OBJS)
+	$(CC) $(CFLAGS) -o $(BIN)/OWL owl.c $(OBJS) $(LIBS)
+mem.o: mem.c mem.h $(DEPS)
+	$(CC) -c $(CFLAGS) mem.c
+msg.o: msg.c msg.h $(DEPS)
+	$(CC) -c $(CFLAGS) msg.c
+seq.o: seq.c seq.h $(DEPS)
+	$(CC) -c $(CFLAGS) seq.c
+time.o: time.c time.h $(DEPS)
+	$(CC) -c $(CFLAGS) time.c
+pos.o: pos.c pos.h $(DEPS)
+	$(CC) -c $(CFLAGS) pos.c
+parser.o: parser.c parser.h $(DEPS)
+	$(CC) -c $(CFLAGS) parser.c
+buffer.o: buffer.c buffer.h $(DEPS)
+	$(CC) -c $(CFLAGS) buffer.c
+common.o: common.c common.h $(DEPS)
+	$(CC) -c $(CFLAGS) common.c
+hash.o: hash.c hash.h $(DEPS)
+	$(CC) -c $(CFLAGS) hash.c
+reads.o: reads.c reads.h $(DEPS)
+	$(CC) -c $(CFLAGS) reads.c
+rmodel.o: rmodel.c rmodel.h $(DEPS)
+	$(CC) -c $(CFLAGS) rmodel.c
+clean:
+	/bin/rm -f *.o
+cleanall:
+	/bin/rm -f *.o $(PROGS)
+#-----------------------------------------------------------------------------
+
