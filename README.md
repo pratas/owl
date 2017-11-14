@@ -80,7 +80,7 @@ All the parameters can be better explained trough the following table:
 
 On using this tool/method, please, cite:
 
-D. Pratas, A. J. Pinho (2017). v1.1 pratas/owl: A tool to order FASTQ reads using elastic cluster mapping.
+D. Pratas, A. J. Pinho (2017). v1.1 pratas/owl: A tool to order FASTQ reads using elastic cluster mapping.<br>
 DOI: 10.5281/zenodo.1048947 
 
 ## 4. ISSUES ##
