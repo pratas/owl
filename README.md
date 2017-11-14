@@ -45,21 +45,21 @@ Non-mandatory arguments:
   -N                         does NOT sort reads,                        
   -W                         writes the full header,                     
   -D                         does NOT delete the temporary file,         
-  -k <k-mer>                 k-mer size [1;20],                          
-  -m <minimum>               minimum block size,                         
+  -k &#60k-mer&#62                 k-mer size [1;20],                          
+  -m &#60minimum&#62               minimum block size,                         
                                                                          
 Mandatory arguments:                                                     
                                                                          
-  <FILE>                     reference file,                             
+  &#60FILE&#62                     reference file,                             
                                                                          
-  <  <FILE>                  stdin input FASTQ file,                     
-  >  <FILE>                  stdout output sorted FASTQ file,            
+  &#60  &#60FILE&#62                  stdin input FASTQ file,                     
+  &#62  &#60FILE&#62                  stdout output sorted FASTQ file,            
                                                                          
 Example:                                                                 
                                                                          
-  ./OWL -v -k 16 -m 40 reference.fa < ex1.fq > ex1-sort.fq               
+  ./OWL -v -k 16 -m 40 reference.fa &#60 ex1.fq &#62 ex1-sort.fq               
                                                                          
-Report bugs to <pratas@ua.pt>.                            
+Report bugs to &#60pratas@ua.pt&#62.                            
 </pre>
 All the parameters can be better explained trough the following table:
 
