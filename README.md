@@ -25,6 +25,11 @@ Cmake is needed for the installation (http://www.cmake.org/). You can download i
 <pre>
 sudo apt-get install cmake
 </pre>
+An alternative to cmake, but limited to Linux, can be set using the following instructions:
+<pre>
+cp Makefile.linux Makefile
+make
+</pre>
 
 ## 2. USAGE ##
 
