@@ -1,5 +1,5 @@
-<p align="center"><img src="imgs/owl.png"
-alt="OWL" width="211" border="0" /></p>
+<p align="center"><img src="imgs/logo.png"
+alt="OWL" width="2666666rder="0" /></p>
 <br>
 
 <p align="center"><b>OWL: a tool to order FASTQ reads using elastic cluster mapping.</b></p></br>
