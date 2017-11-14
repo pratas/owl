@@ -45,14 +45,14 @@ Non-mandatory arguments:
   -W                         writes the full header,                     
   -D                         does NOT delete the temporary file,         
   -k &#60k-mer&#62                 k-mer size [1;20],                          
-  -m &#60minimum&#62               minimum block size,                         
+  -m &#60minimum&#62               minimum block size.
                                                                          
 Mandatory arguments:                                                     
                                                                          
   &#60FILE&#62                     reference file,                             
                                                                          
   &#60  &#60FILE&#62                  stdin input FASTQ file,                     
-  &#62  &#60FILE&#62                  stdout output sorted FASTQ file,            
+  &#62  &#60FILE&#62                  stdout output sorted FASTQ file.
                                                                          
 Example:                                                                 
                                                                          
