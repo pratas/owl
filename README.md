@@ -2,7 +2,7 @@
 alt="OWL" width="264" border="0" /></p>
 <br>
 
-<p align="center"><b>A tool to order FASTQ reads using elastic cluster mapping.</b></p>
+<p align="center"><b>A tool to order FASTQ reads using elastic cluster mapping.</b></p></br>
 <p align="justify">
 
 ## 1. INSTALLATION ##
@@ -73,6 +73,8 @@ All the parameters can be better explained trough the following table:
 | -k &#60;k-mer&#62;   | The word size of the slidding window. From 1 to 20. Usually, larger values need more memory.    |
 | -m &#60;minimum&#62;      | The minimum size of proximity. Used in the elastic clustering.              |
 | [FILE]           | Reference filename (DNA sequence or FASTA file). |
+| &#60; [FILE]           | Input FASTQ file with the arbitrary read order (standard input). |
+| &#62; [FILE]           | Output FASTQ file with the reads ordered (standard output). |
 
 ## 3. CITATION ##
 
