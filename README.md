@@ -8,6 +8,7 @@ OWL is a new tool to order FASTQ reads, neglecting the original order. It maps t
 <p align="center"><img src="imgs/description.png"
 alt="OWL" width="670" border="0" /></p>
 <br>
+A human reference genome can be downloaded using the script GetHuman.sh contained in the scripts folder.
 
 
 ## 1. INSTALLATION ##
