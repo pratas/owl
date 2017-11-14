@@ -34,7 +34,7 @@ These will print the following options:
 <pre>
 <p>
 Usage: OWL [OPTIONS]... [FILE] [FILE]                                    
-A tool to sort FASTQ reads using cluster mapping.                        
+A tool to order FASTQ reads using elastic cluster mapping.                        
                                                                          
 Non-mandatory arguments:                                                 
                                                                          
@@ -58,7 +58,7 @@ Example:
                                                                          
   ./OWL -v -k 16 -m 40 reference.fa &#60 ex1.fq &#62 ex1-sort.fq               
                                                                          
-Report bugs to &#60pratas@ua.pt&#62.                            
+Report bugs to &#60{pratas,ap}@ua.pt&#62.                            
 </pre>
 All the parameters can be better explained trough the following table:
 
