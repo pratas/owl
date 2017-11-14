@@ -50,7 +50,7 @@ void PrintVersion(void){
   "                                                                         \n" 
   "                        D. Pratas <pratas@ua.pt>                         \n"
   "                                                                         \n"
-  "                                   and                                   \n"
+  "                                  and                                    \n"
   "                                                                         \n"
   "                          A. Pinho <ap@ua.pt>.                         \n\n", 
   VERSION, RELEASE);
