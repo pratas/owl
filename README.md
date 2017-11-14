@@ -2,9 +2,9 @@
 alt="OWL" width="211" border="0" /></p>
 <br>
 
-<p align="center"><b>A tool to order FASTQ reads using elastic cluster mapping.</b></p></br>
+<p align="center"><b>OWL: a tool to order FASTQ reads using elastic cluster mapping.</b></p></br>
 <p align="justify">
-
+OWL is a new tool to order FASTQ reads, neglecting the original order. It maps the reads according to a reference sequence using k-mer positional hashing and, then, it orders the reads using elastic clustering. Its usage is only needed during compression, enabling a very fast and low memory decompression. The tool can be used to substantially improve the compression of the FASTQ files (See the following Figure for a pipeline). The time complexity of the tool is approximately linear.<br></p>
 <p align="center"><img src="imgs/description.png"
 alt="OWL" width="611" border="0" /></p>
 <br>
