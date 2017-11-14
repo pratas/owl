@@ -5,6 +5,11 @@ alt="OWL" width="211" border="0" /></p>
 <p align="center"><b>A tool to order FASTQ reads using elastic cluster mapping.</b></p></br>
 <p align="justify">
 
+<p align="center"><img src="imgs/description.png"
+alt="OWL" width="611" border="0" /></p>
+<br>
+
+
 ## 1. INSTALLATION ##
 
 Downloading and installing OWL:
