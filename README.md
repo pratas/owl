@@ -3,7 +3,7 @@ alt="OWL" width="264" border="0" /></p>
 <br>
 
 <p align="justify">
-Under development...
+A tool to order FASTQ reads using elastic cluster mapping.
 </b>
 
 ## 1. INSTALLATION ##
@@ -71,13 +71,15 @@ All the parameters can be better explained trough the following table:
 | -N                  | It will NOT sort the reads (for analysis purposes). |
 | -W                  | It will write the full header in the output FASTQ file. Usually a very part of the header is not needed.    |
 | -D                  | It will not delete the temporary file for ordering the reads (for analysis purposes).    |
-| -k &#60;k-mer&#62;   | word size of the slidding window. From 1 to 20. Usually, larger values need more memory.    |
-| -m &#60;minimum&#62;      | minimum size of proximity. Used in the elastic clustering.              |
+| -k &#60;k-mer&#62;   | The word size of the slidding window. From 1 to 20. Usually, larger values need more memory.    |
+| -m &#60;minimum&#62;      | The minimum size of proximity. Used in the elastic clustering.              |
 | [FILE]           | Reference filename (DNA sequence or FASTA file). |
 
 ## 3. CITATION ##
 
-Under development!
+On using this tool/method, please, cite:
+
+D. Pratas, A. J. Pinho (2017). OWL: a tool to order FASTQ reads using elastic cluster mapping.
 
 ## 4. ISSUES ##
 
