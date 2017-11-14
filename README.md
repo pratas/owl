@@ -2,9 +2,8 @@
 alt="OWL" width="264" border="0" /></p>
 <br>
 
+<p align="center"><b>A tool to order FASTQ reads using elastic cluster mapping.</b></p>
 <p align="justify">
-A tool to order FASTQ reads using elastic cluster mapping.
-</b>
 
 ## 1. INSTALLATION ##
 
