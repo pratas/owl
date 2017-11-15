@@ -12,7 +12,7 @@ void PrintMenu(void){
   "  -h                         give this help,                             \n"
   "  -V                         display version number,                     \n"
   "  -v                         verbose mode (more information),            \n"
-  "  -N                         does NOT sort reads,                        \n"
+  "  -N                         does NOT order reads,                       \n"
   "  -W                         writes the full header,                     \n"
   "  -D                         does NOT delete the temporary file,         \n"
   "  -k <k-mer>                 k-mer size [1;20],                          \n"
