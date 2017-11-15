@@ -89,7 +89,8 @@ All the parameters can be better explained trough the following table:
 
 ## 3. EXAMPLE WITH GZIP ##
 
-The following instructions shows ow to integrate with GZIP:
+For the example consider a reference sequence in FASTA format with the name 'reference.fa' and a FASTQ file with the name 'reads.fq'.
+The following instructions shows how to integrate OWL with GZIP:
 <pre>
 ./OWL -v -k 16 -m 40 reference.fa < reads.fq | gzip > reads.gz
 </pre>
