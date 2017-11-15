@@ -89,6 +89,7 @@ All the parameters can be better explained trough the following table:
 
 ## 3. EXAMPLE WITH GZIP ##
 
+The OWL tool can be integrated with most of the general purpose and specific FASTQ compressors. 
 For the example consider a reference sequence in FASTA format with the name 'reference.fa' and a FASTQ file with the name 'reads.fq'.
 The following instructions shows how to integrate OWL with GZIP:
 <pre>
