@@ -52,7 +52,7 @@ Non-mandatory arguments:
   -h                         give this help,                             
   -V                         display version number,                     
   -v                         verbose mode (more information),            
-  -N                         does NOT sort reads,                        
+  -N                         does NOT order reads,                        
   -W                         writes the full header,                     
   -D                         does NOT delete the temporary file,         
   -k &#60k-mer&#62                 k-mer size [1;20],                          
