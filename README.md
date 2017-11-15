@@ -87,18 +87,29 @@ All the parameters can be better explained trough the following table:
 | &#60; [FILE]           | Input FASTQ file with the arbitrary read order (standard input). |
 | &#62; [FILE]           | Output FASTQ file with the reads ordered (standard output). |
 
-## 3. CITATION ##
+## 3. EXAMPLE WITH GZIP ##
+
+The following instructions shows ow to integrate with GZIP:
+<pre>
+./OWL -v -k 16 -m 40 reference.fa < reads.fq | gzip > reads.gz
+</pre>
+and for decompression:
+<pre>
+gunzip reads.gz
+</pre>
+
+## 4. CITATION ##
 
 On using this tool/method, please, cite:
 
 D. Pratas, A. J. Pinho (2017). v1.1 pratas/owl: A tool to order FASTQ reads using elastic cluster mapping.<br>
 DOI: 10.5281/zenodo.1048947 
 
-## 4. ISSUES ##
+## 5. ISSUES ##
 
 For any issue let us know at [issues link](https://github.com/pratas/owl/issues).
 
-## 5. LICENSE ##
+## 6. LICENSE ##
 
 GPL v3.
 
