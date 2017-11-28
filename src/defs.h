@@ -6,6 +6,8 @@
 #include <inttypes.h>
 #include <unistd.h>
 
+#define NON_RANDOM_MODE 1
+
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

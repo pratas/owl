@@ -157,6 +157,11 @@ int64_t CumulativeElastic(int64_t a[], int64_t size){
   int64_t best    = 0;
 
   for(x = 1 ; x < size ; ++x){
+
+    #ifdef NON_RANDOM_MODE
+    if(a[x] == -1) continue; // SKIP IF UNDEFINED (-1)
+    #endif
+
     if(a[x] < pivot + P->minimum){
       ++elastic;
       best = pivot;
@@ -237,11 +242,15 @@ void MapTarget(void){
       pos = &symBuf->buf[symBuf->idx-1];
       GetIdxRM(pos, RM);
       if(++base > P->kmer){
+        #ifdef NON_RANDOM_MODE
+        positions[idx++] = GetPositionRM(RM, Hash);
+        #elif
         int64_t pos_idx = GetPositionRM(RM, Hash);
         if(pos_idx == -1)
-          positions[idx++] = rand() % 1099511627776;  // RANDOMIZE POSITION
+          positions[idx++] = rand() % 2300000000;  // RANDOMIZE by number of chars
         else
           positions[idx++] = pos_idx;
+        #endif
         }
       UpdateCBuffer(symBuf);
       }
