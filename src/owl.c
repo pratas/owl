@@ -331,7 +331,7 @@ void MapAction(){
   fprintf(stderr, "      Done!                \n");
 
   fprintf(stderr, "  [+] Order reads ... \n");
-  OrderReads(4096); // 4096 -> 4 GB of RAM
+  OrderReads(32768); // 32768 -> 32 GB of RAM
   fprintf(stderr, "      Done!                \n");
   }
 
