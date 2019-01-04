@@ -87,17 +87,30 @@ All the parameters can be better explained trough the following table:
 | &#60; [FILE]           | Input FASTQ file with the arbitrary read order (standard input). |
 | &#62; [FILE]           | Output FASTQ file with the reads ordered (standard output). |
 
-## 3. EXAMPLE WITH GZIP ##
+## 3. EXAMPLES ##
 
 The OWL tool can be integrated with most of the general purpose and specific FASTQ compressors. 
 For the example consider a reference sequence in FASTA format with the name 'reference.fa' and a FASTQ file with the name 'reads.fq'.
+
+### 3.1 GZIP EXAMPLE: ###
 The following instructions shows how to integrate OWL with GZIP:
 <pre>
-./OWL -v -k 16 -m 40 reference.fa < reads.fq | gzip > reads.gz
+./OWL -v -k 10 -m 40 reference.fa < reads.fq | gzip > reads.gz
 </pre>
 and for decompression:
 <pre>
 gunzip reads.gz
+</pre>
+
+### 3.2 EXAMPLE WITH FQZ_COMP ###
+
+The following instructions shows how to integrate OWL with FQZ_COMP:
+<pre>
+./OWL -v -k 10 -m 40 reference.fa < reads.fq | ./fqz_comp > reads.gz
+</pre>
+and for decompression:
+<pre>
+./fqz_comp -d < reads.gz > reads.fq
 </pre>
 
 ## 4. CITATION ##
