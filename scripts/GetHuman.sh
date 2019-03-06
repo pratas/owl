@@ -3,7 +3,7 @@
 INITALS="HS";
 MAX=22;
 WGETOP=" --trust-server-names -q ";
-ONWAY="ftp://ftp.ncbi.nlm.nih.gov/genomes/Homo_sapiens/Assembled_chromosomes/seq/hs_ref_GRCh38.p7_chr"
+ONWAY="ftp://ftp.ncbi.nlm.nih.gov/genomes/Homo_sapiens/Assembled_chromosomes/seq/hs_ref_GRCh38.p12_chr"
 #-----------------------------------------------------------------------------
 function downloadEach
   {
@@ -61,12 +61,14 @@ CHR=27
 downloadEach "$WGETOP" "ftp://ftp.ncbi.nlm.nih.gov/genomes/Homo_sapiens/Assembled_chromosomes/seq/hs_ref_GRCh38.p7_chrMT.fa.gz" "$CHR" "$INITALS";
 zcat $INITALS-X$CHR > $INITALS$CHR;
 echo "$INITALS MITOCONDRIAL filtered";
+
 rm -f HS.fa;
-for(( x=1; x<=27 ; ++x))
+for(( x=1; x<=27 ; ++x ))
   do
   cat HS$x >> HS.fa
   rm -f HS$x;
   done
+
 rm *HS-* -f
 echo "Done!"
 #=============================================================================
